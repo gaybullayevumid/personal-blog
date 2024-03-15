@@ -16,7 +16,11 @@
             <div class="d-flex">
                 <p class="mr-3 text-muted"><i class="fa fa-calendar-alt"></i>{{post.created_on | date:"d-b-Y"}}</p>
                 <p class="mr-3 text-muted"><i class="fa fa-folder"></i> Web Design</p>
+                {% if post.comments.count <= 1 %}
+                <p class="mr-3 text-muted"><i class="fa fa-comments"></i> {{post.comments.count}} Comment</p>
+                {% else %}
                 <p class="mr-3 text-muted"><i class="fa fa-comments"></i> {{post.comments.count}} Comments</p>
+                {% endif %}
             </div>
             <p>{{post.body}}</p>
             {% comment %} <h3 class="mb-3 font-weight-bold">Est dolor lorem et ea</h3>
@@ -39,17 +43,24 @@
             </div> 
         </div>
         <div class="col-12 py-4">
-            <h3 class="mb-4 font-weight-bold">3 Comments</h3>
+            {% if post.comments.count <= 1 %}
+            <h3 class="mb-4 font-weight-bold">{{post.comments.count}} Comment</h3>
+            {% else %}
+            <h3 class="mb-4 font-weight-bold">{{post.comments.count}} Comments</h3>
+            {% endif %}
+            {% for comment in comments %}
             <div class="media mb-4">
-                <img src="img/user.jpg" alt="Image" class="mr-3 mt-1 rounded-circle" style="width:60px;">
+                <img src="{{comment.image.url}}" alt="Image" class="mr-3 mt-1 rounded-circle" style="width:60px;">
                 <div class="media-body">
-                    <h4>John Doe <small><i>01 Jan 2045 at 12:00pm</i></small></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    <h4>{{comment.name}} <small><i>{{comment.created_on}}</i></small></h4>
+                    <p>
+                        {{comment.msg}}
                     </p>
                     <button class="btn btn-sm btn-light">Reply</button>
                 </div>
             </div>
-            <div class="media mb-4">
+            {% endfor %}
+            {% comment %} <div class="media mb-4">
                 <img src="img/user.jpg" alt="Image" class="mr-3 mt-1 rounded-circle"
                     style="width:60px;">
                 <div class="media-body">
@@ -68,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
         <div class="col-12">
             <h3 class="mb-4 font-weight-bold">Leave a comment</h3>

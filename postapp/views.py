@@ -15,6 +15,7 @@ def getPosts(request):
 def getPost(request, pk):
     template_name = 'postapp/detail.html'
     post = Post.objects.get(pk=pk)
+    comments = post.comments.all()
     comment_form = CommentForm()
     if request.method=='POST':
         comment_form = CommentForm(request.POST)
@@ -23,5 +24,5 @@ def getPost(request, pk):
             comment.post_id = post.id
             comment.save()
     print("Get")
-    context = {"post":post, "comment_form":comment_form}
+    context = {"post":post, "comment_form":comment_form, "comments":comments}
     return render(request=request, template_name=template_name, context=context)
