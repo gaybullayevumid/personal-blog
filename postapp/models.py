@@ -22,7 +22,7 @@ class Comment(models.Model):
     email = models.EmailField(max_length=200)
     website = models.CharField(max_length=100, blank=True, null=True)
     msg = models.TextField()
-    parent = models.ForeignKey('Comment', on_delete=models.CASCADE, related_name='replies', null=True, default=None)
+    parent = models.ForeignKey('Comment', on_delete=models.CASCADE, related_name='replies')
     image = models.FileField(upload_to='comment-image', default='comment-image/user.png')
     created_on = models.DateTimeField(auto_now_add=True)
 
